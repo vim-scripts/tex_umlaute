@@ -1,0 +1,7 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=1262
+
+This script is based on vimscript #907 by Timo Teifel. Main reason I wrote this is that I was annoyed by the different encoded Umlauts in TeX files of different authors. Some write {\"a}, some \"a, some \"{a} some even "a.
+
+On loading all occurances of TeX encoded German Umlauts will be replaced by their normal counterparts. On writing they are replaced by a clean standard encoding (\"a for an ä, \ss{} for ß).
+
+Can be simply extended for other chars or utf-8 codings if there is need for...
