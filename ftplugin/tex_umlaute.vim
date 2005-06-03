@@ -1,5 +1,5 @@
 " Vim tex_umlaute plugin, 
-" Version: 1.0
+" Version: 1.1
 " 
 " Description:
 " When loading a tex file, this plugin replaces all
@@ -22,7 +22,13 @@
 " TeX-Code, undoing it after the write, to keep the chars
 " if you keep working with the file.
 "
-" It recognizes {\"a}, \"a and "a but it writes {\"a} like Emacs iso-cvt does.
+" It recognizes {\"a}, \"a, \"{a} and "a but it writes \"a. 
+"
+" I changed the output from the Emacs iso-cvt like {\"a} after
+" Jan Heerda <janjh at mathematik dot hu-berlin dot de> 
+" pointed out, that kerning is disturbed badly by using {\"a} and it
+" is not disturbed by using \"a. More in Mark Trettin's "An 
+" essential guide to \LaTeXe{} usage" (p. 10) [CTAN:info/l2tabu/]
 "
 " Installation:
 " Save this file as ~/.vim/plugin/tex_umlaute.vim or :source
@@ -31,6 +37,9 @@
 " Licence: GPL v2.0 or any later version
 "
 " Changelog:
+" v1.1, 2005-06-04
+"  - changed output to \"a instead of {\"a}
+"  - detection of \"{a}
 " v1.0, 2005-04-15
 "  - initial release (based on html_umlaute 1.1)
 
@@ -80,6 +89,14 @@ function s:Tex2Char()
     %s/\\"O/Ö/eIg
     %s/\\"U/Ü/eIg
     %s/\\ss{}/ß/eIg
+    " more rather normal styled Umlauts
+    %s/\\"{a}/ä/eIg
+    %s/\\"{o}/ö/eIg
+    %s/\\"{u}/ü/eIg
+    %s/\\"{A}/Ä/eIg
+    %s/\\"{O}/Ö/eIg
+    %s/\\"{U}/Ü/eIg
+    %s/\\{ss}/ß/eIg
     " if you use package german or ngerman you can encode Umlauts like this
     %s/\\"a/ä/eIg
     %s/\\"o/ö/eIg
@@ -100,13 +117,13 @@ function s:Char2Tex()
 	let s:column = col(".")
     let s:save_report = &report
     set report=99999
-    %s/ä/{\\"a}/eIg
-    %s/ö/{\\"o}/eIg
-    %s/ü/{\\"u}/eIg
-    %s/Ä/{\\"A}/eIg
-    %s/Ö/{\\"O}/eIg
-    %s/Ü/{\\"U}/eIg
-    %s/ß/{\\ss}/eIg
+    %s/ä/\\"a/eIg
+    %s/ö/\\"o/eIg
+    %s/ü/\\"u/eIg
+    %s/Ä/\\"A/eIg
+    %s/Ö/\\"O/eIg
+    %s/Ü/\\"U/eIg
+    %s/ß/\\ss{}/eIg
     let &report=s:save_report
     unlet s:save_report
     call cursor(s:line,s:column)
