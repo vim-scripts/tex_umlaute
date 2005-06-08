@@ -1,5 +1,5 @@
 " Vim tex_umlaute plugin, 
-" Version: 1.1
+" Version: 1.2
 " 
 " Description:
 " When loading a tex file, this plugin replaces all
@@ -37,6 +37,8 @@
 " Licence: GPL v2.0 or any later version
 "
 " Changelog:
+" v1.2, 2005-06-08
+"  - now (n)german style is really (n)german style
 " v1.1, 2005-06-04
 "  - changed output to \"a instead of {\"a}
 "  - detection of \"{a}
@@ -89,6 +91,7 @@ function s:Tex2Char()
     %s/\\"O/Ö/eIg
     %s/\\"U/Ü/eIg
     %s/\\ss{}/ß/eIg
+    %s/\\ss/ß/eIg
     " more rather normal styled Umlauts
     %s/\\"{a}/ä/eIg
     %s/\\"{o}/ö/eIg
@@ -98,13 +101,13 @@ function s:Tex2Char()
     %s/\\"{U}/Ü/eIg
     %s/\\{ss}/ß/eIg
     " if you use package german or ngerman you can encode Umlauts like this
-    %s/\\"a/ä/eIg
-    %s/\\"o/ö/eIg
-    %s/\\"u/ü/eIg
-    %s/\\"A/Ä/eIg
-    %s/\\"O/Ö/eIg
-    %s/\\"U/Ü/eIg
-    %s/\\ss/ß/eIg
+    %s/"a/ä/eIg
+    %s/"o/ö/eIg
+    %s/"u/ü/eIg
+    %s/"A/Ä/eIg
+    %s/"O/Ö/eIg
+    %s/"U/Ü/eIg
+    %s/"s/ß/eIg
     let &report=s:save_report
     unlet s:save_report
     call cursor(s:line,s:column)
